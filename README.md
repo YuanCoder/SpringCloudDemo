@@ -102,4 +102,11 @@ SpringCloud 学习
       关闭service-hi服务再次访问 http://localhost:8765/hi?name=yuan</br>
          出现 sorry yuan</br>
          这就证明断路器起作用了。</br>
-    # 踩坑 最新版本的feign是自带断路器的已经默认关闭，需要手动打开.
+   <strong>踩坑 最新版本的feign是自带断路器的已经默认关闭，需要手动打开.</strong>
+
+   Circuit Breaker: Hystrix Dashboard (断路器：hystrix 仪表盘) </br>
+   1 主程序入口中加入@EnableHystrixDashboard注解，开启hystrixDashboard </br>
+   2 打开浏览器：访问http://localhost:8764/hystrix  </br>
+   3 Hystrix Dashboard 下输入 http://localhost:8764/hystrix.stream    title 随便输入一个标识 </br>
+   4 点击monitor stream，会出现监控界面. </br>
+   5 访问：http://localhost:8764/hi?name=yuan,监控界面会动态显示 请求的次数以及其它信息. </br>
