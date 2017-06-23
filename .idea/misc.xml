@@ -11,6 +11,7 @@
         <option value="$PROJECT_DIR$/servicehi/pom.xml" />
         <option value="$PROJECT_DIR$/serviceribbon/pom.xml" />
         <option value="$PROJECT_DIR$/servicefeign/pom.xml" />
+        <option value="$PROJECT_DIR$/servicezuul/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">

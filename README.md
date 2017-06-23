@@ -109,4 +109,32 @@ SpringCloud 学习
    2 打开浏览器：访问http://localhost:8764/hystrix  </br>
    3 Hystrix Dashboard 下输入 http://localhost:8764/hystrix.stream    title 随便输入一个标识 </br>
    4 点击monitor stream，会出现监控界面. </br>
-   5 访问：http://localhost:8764/hi?name=yuan,监控界面会动态显示 请求的次数以及其它信息. </br>
+   5 访问：http://localhost:8764/hi?name=yuan ,监控界面会动态显示 请求的次数以及其它信息. </br>
+
+
+# 路由网关(zuul)
+     在微服务架构中，需要几个关键的组件，服务注册与发现、服务消费、负载均衡、断路器、智能路由、配置管理等，<br>
+     由这几个组件可以组建一个简单的微服务架构。<br>
+
+  以gitHub 为例 <br>
+     客户端的请求首先经过负载均衡（zuul、Ngnix），再到达服务网关（zuul集群），然后再到具体的服务，服务统一 <br>
+     注册到高可用的服务注册中心集群，服务的所有的配置文件由配置服务管理（下一篇文章讲述），配置服务的配置文 <br>
+     件放在Git仓库，方便开发人员随时改配置。 <br>
+
+  Zuul简介
+
+    Zuul的主要功能是路由和过滤器。路由功能是微服务的一部分，比如/api/user映射到user服务，/api/shop映射到shop <br>
+    服务。zuul实现了负载均衡。（理解意思：zuul主要作用是请求转发，和过滤，请求转发是做了负载均衡。）<br>
+
+    首先向eureka注册自己，端口为8769，服务名为service-zuul；以/api-a/ 开头的请求都指向service-ribbon；<br>
+    以/api-b/开头的请求都指向service-feign；<br>
+
+    依次运行这五个工程;打开浏览器访问：http://localhost:8769/api-a/hi?name=yuan ;浏览器显示： <br>
+
+    hi forezp,i am from port:8762   <br>
+    打开浏览器访问：http://localhost:8769/api-b/hi?name=yuan ;浏览器显示：  <br>
+
+    hi forezp,i am from port:8762  <br>
+    这说明zuul起到了路由的作用； <br>
+
+    zuul不仅只是路由，并且还能过滤，做一些安全验证。<br>
