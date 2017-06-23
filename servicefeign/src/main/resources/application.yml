@@ -1,0 +1,9 @@
+eureka: #向服务注册中心注册它自己，这时service-feign既是服务提供者
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+server:
+  port: 8765
+spring:
+  application:
+    name: service-feign

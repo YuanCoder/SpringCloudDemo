@@ -10,8 +10,13 @@
         <option value="$PROJECT_DIR$/eurekaserver/pom.xml" />
         <option value="$PROJECT_DIR$/servicehi/pom.xml" />
         <option value="$PROJECT_DIR$/serviceribbon/pom.xml" />
-        <option value="$PROJECT_DIR$/servicehi2/pom.xml" />
+        <option value="$PROJECT_DIR$/servicefeign/pom.xml" />
       </list>
+    </option>
+    <option name="ignoredFiles">
+      <set>
+        <option value="$PROJECT_DIR$/service-feign/pom.xml" />
+      </set>
     </option>
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">

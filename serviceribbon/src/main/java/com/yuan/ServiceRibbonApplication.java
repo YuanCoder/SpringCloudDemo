@@ -14,7 +14,7 @@ import org.springframework.web.client.RestTemplate;
  *
  */
 @SpringBootApplication
-@EnableDiscoveryClient
+@EnableDiscoveryClient //向服务中心注册
 public class ServiceRibbonApplication {
 
 	public static void main(String[] args){
