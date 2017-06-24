@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: config-server
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/YuanCoder/SpringcloudConfig/
+          search-paths: respo
+          username:  #your username
+          password:  #your password
+      label: master
+
+server:
+  port: 8888
+

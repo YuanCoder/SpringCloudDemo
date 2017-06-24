@@ -157,3 +157,38 @@ SpringCloud 学习
     网页显示： <br>
 
     hi yuan,i am from port:8763
+
+
+
+# 分布式配置中心(Spring Cloud Config)
+
+    在分布式系统中，spring cloud config 提供一个服务端和客户端去提供可扩展的配置服务。我们可用用配置服务  <br>
+    中心区集中的管理所有的服务的各种环境配置文件。配置服务中心采用Git的方式存储配置文件，因此我们很容易部  <br>
+    署修改，有助于对环境配置进行版本管理。 <br>
+
+    config-server <br>
+    配置中心配置如下:   <br>
+        spring.cloud.config.server.git.uri：配置git仓库地址   <br>
+        spring.cloud.config.server.git.searchPaths：配置仓库路径   <br>
+        spring.cloud.config.label：配置仓库的分支   <br>
+        spring.cloud.config.server.git.username：访问git仓库的用户名   <br>
+        spring.cloud.config.server.git.password：访问git仓库的用户密码   <br>
+
+    远程仓库https://github.com/forezp/SpringcloudConfig/ 中又个文件config-client-dev.properties   <br>
+    文件中有一个属性：foo = foo version 4   <br>
+
+
+    启动程序：访问http://localhost:8888/foo/dev   <br>
+
+        {"name":"foo","profiles":["dev"],"label":"master",  <br>
+        "version":"792ffc77c03f4b138d28e89b576900ac5e01a44b","state":null,"propertySources":[]}   <br>
+
+    证明配置服务中心可以从远程程序获取配置信息。  <br>
+
+    http请求地址和资源文件映射如下:   <br>
+
+        /{application}/{profile}[/{label}]   <br>
+        /{application}-{profile}.yml   <br>
+        /{label}/{application}-{profile}.yml   <br>
+        /{application}-{profile}.properties   <br>
+        /{label}/{application}-{profile}.properties   <br>
