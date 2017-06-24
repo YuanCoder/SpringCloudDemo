@@ -131,10 +131,29 @@ SpringCloud 学习
 
     依次运行这五个工程;打开浏览器访问：http://localhost:8769/api-a/hi?name=yuan ;浏览器显示： <br>
 
-    hi forezp,i am from port:8762   <br>
+    hi yuan,i am from port:8762   <br>
     打开浏览器访问：http://localhost:8769/api-b/hi?name=yuan ;浏览器显示：  <br>
 
-    hi forezp,i am from port:8762  <br>
+    hi yuan,i am from port:8762  <br>
     这说明zuul起到了路由的作用； <br>
 
-    zuul不仅只是路由，并且还能过滤，做一些安全验证。<br>
+    zuul不仅只是路由，并且还能过滤，做一些安全验证，譬如：服务过滤。<br>
+
+    <strong>服务过滤</strong> <br>
+
+    filterType：返回一个字符串代表过滤器的类型，在zuul中定义了四种不同生命周期的过滤器类型，具体如下： <br>
+        pre：路由之前 <br>
+        routing：路由之时 <br>
+        post： 路由之后 <br>
+        error：发送错误调用 <br>
+    filterOrder：过滤的顺序 <br>
+    shouldFilter：这里可以写逻辑判断，是否要过滤，本文true,永远过滤。 <br>
+    run：过滤器的具体逻辑。可用很复杂，包括查sql，nosql去判断该请求到底有没有权限访问。 <br>
+
+    这时访问：http://localhost:8769/api-a/hi?name=yuan ；网页显示：<br>
+
+    token is empty
+    访问 http://localhost:8769/api-a/hi?name=yuan&token=520 ；
+    网页显示： <br>
+
+    hi yuan,i am from port:8763
