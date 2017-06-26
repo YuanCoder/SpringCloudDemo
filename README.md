@@ -192,3 +192,27 @@ SpringCloud 学习
         /{label}/{application}-{profile}.yml   <br>
         /{application}-{profile}.properties   <br>
         /{label}/{application}-{profile}.properties   <br>
+
+
+    config-client <br>
+
+        其配置文件： <br>
+
+        spring.application.name=config-client  <br>
+        spring.cloud.config.label=master  <br>
+        spring.cloud.config.profile=dev  <br>
+        spring.cloud.config.uri= http://localhost:8888/  <br>
+        server.port=8881  <br>
+
+        spring.cloud.config.label 指明远程仓库的分支  <br>
+        spring.cloud.config.profile  <br>
+
+        dev开发环境配置文件  <br>
+        test测试环境  <br>
+        pro正式环境  <br>
+        spring.cloud.config.uri= http://localhost:8888/ 指明配置服务中心的网址。 <br>
+
+        打开网址访问：http://localhost:8881/hi，网页显示：   <br>
+
+        foo version 4   <br>
+        这就说明，config-client从config-server获取了foo的属性，而config-server是从git仓库读取的.   <br>

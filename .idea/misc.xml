@@ -13,6 +13,7 @@
         <option value="$PROJECT_DIR$/servicefeign/pom.xml" />
         <option value="$PROJECT_DIR$/servicezuul/pom.xml" />
         <option value="$PROJECT_DIR$/configserver/pom.xml" />
+        <option value="$PROJECT_DIR$/configclient/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">
