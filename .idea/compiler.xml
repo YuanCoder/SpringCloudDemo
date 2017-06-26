@@ -25,6 +25,7 @@
         <module name="configclient" />
         <module name="configserver" />
         <module name="eurekaserver" />
+        <module name="eurekaserver2" />
         <module name="servicefeign" />
         <module name="servicehi" />
         <module name="serviceribbon" />
@@ -35,6 +36,7 @@
       <module name="configclient" target="1.8" />
       <module name="configserver" target="1.8" />
       <module name="eurekaserver" target="1.8" />
+      <module name="eurekaserver2" target="1.8" />
       <module name="servicefeign" target="1.8" />
       <module name="servicehi" target="1.8" />
       <module name="servicehi2" target="1.8" />

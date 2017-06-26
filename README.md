@@ -166,6 +166,8 @@ SpringCloud 学习
     中心区集中的管理所有的服务的各种环境配置文件。配置服务中心采用Git的方式存储配置文件，因此我们很容易部  <br>
     署修改，有助于对环境配置进行版本管理。 <br>
 
+    主要讲：一个服务如何从配置中心读取文件，配置中心如何从远程Git读取配置文件 <br>
+
     config-server <br>
     配置中心配置如下:   <br>
         spring.cloud.config.server.git.uri：配置git仓库地址   <br>
@@ -216,3 +218,25 @@ SpringCloud 学习
 
         foo version 4   <br>
         这就说明，config-client从config-server获取了foo的属性，而config-server是从git仓库读取的.   <br>
+
+
+# 高可用的分布式配置中心(Spring Cloud Config)
+
+    当配置中心服务很多时，都需要同时从配置中心读取文件的时候，这时我们可以考虑将配置中心做成一个微服务，   <br>
+    并且将其集群化，从而达到高可用。    <br>
+
+    创建一个eureka-server2工程，用作服务中心。    <br>
+    改造config-server (将其注册为服务)<br>
+    改造config-client (将其注册微 eureka服务)</br>
+
+        spring.cloud.config.discovery.enabled 是非从配置中心读取文件
+        spring.cloud.config.discovery.serviceId 配置中心的servieId，即服务名
+
+    这时发现，在读取配置文件不再写ip地址，而是服务名，这时如果配置服务部署多份，通过负载均衡，从而高可用。
+
+    一次启动eureka-servr,config-server,config-client
+    访问网址：http://localhost:8889/
+
+    访问http://localhost:8881/hi，浏览器显示：
+
+    foo version 4
