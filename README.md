@@ -240,3 +240,72 @@ SpringCloud 学习
     访问http://localhost:8881/hi，浏览器显示：
 
     foo version 4
+
+
+# 消息总线(Spring Cloud Bus)
+
+    spring Cloud Bus 将分布式的节点和轻量的消息代理连接起来。这可以用于广播配置文件的更改或者其他的管理工作。 <br>
+    一个关键的思想就是，消息总线可以为微服务做监控，也可以作为应用程序之间相互通讯。本文要讲述的是用AMQP实现  <br>
+    通知微服务架构的配置文件的更改。  <br>
+
+    按照官方文档，我们只需要在配置文件中配置 spring-cloud-starter-bus-amqp ；这就是说我们需要装rabbitMq。  <br>
+
+    说一下基本原理：   <br>
+        git 上存放我们的远程配置文件  <br>
+        config-server 连接到 git  <br>
+        config-client 连接到config-server  <br>
+        当我们启动config-client 服务的时候，client 会通过连接的 config-server 拿到远程git 上面的配置文件，然 <br>
+        后通过 Spring 加载到对象中。 <br>
+
+
+    依次启动eureka-server、confg-cserver,启动两个config-client，端口为：8881、8882。    <br>
+
+            访问http://localhost:8881/hi 或者http://localhost:8882/hi 浏览器显示：   <br>
+
+            foo version 4   <br>
+
+    去代码仓库将foo的值改为“foo version 0304”，即改变配置文件foo的值。如果是传统的做法，可以需要重启服务，才能  <br>
+    达到配置文件的更新。此时，我们只需要用post请求：http://localhost:8881/bus/refresh  <br>
+    重新读取配置文件  <br>
+
+    这时我们再访问http://localhost:8881/hi 或者http://localhost:8882/hi 浏览器显示：   <br>
+
+    foo version 0304  <br>
+
+    另外，/bus/refresh接口可以指定服务，即使用”destination”参数，比如 “/bus/refresh?destination=customers:**”    <br>
+    刷新服务名为customers的所有服务，不管ip。   <br>
+
+    当Git文件更改的时候，通过pc端用post 向端口为8882的config-client发送请求/bus/refresh/；此时8882端口会发送一个 <br>
+    消息，由消息总线向其他服务传递，从而使整个微服务集群都达到更新配置文件。 <br>
+    <strong>踩坑</strong> <br>
+        1 /bus/refresh现在只接受POST请求 <br>
+        2 要在 config-client 里加入 @RefreshScope 这个注解，然后在peroperites里面要加入 <br>
+          management.security.enabled=false 来保证调用 /bus/refresh的时候不需要验证。 <br>
+
+# 服务链路追踪(Spring Cloud Sleuth)
+
+    服务追踪组件zipkin，spring Cloud Sleuth集成了zipkin组件。   <br>
+    Spring Cloud Sleuth 主要功能就是在分布式系统中提供追踪解决方案，并且兼容支持了 zipkin，你只需要在pom文件中    <br>
+    引入相应的依赖即可。   <br>
+
+    服务追踪分析  <br>
+    微服务架构上通过业务来划分服务的，通过REST调用，对外暴露的一个接口，可能需要很多个服务协同才能完成这个接口功能，   <br>
+    如果链路上任何一个服务出现问题或者网络超时，都会形成导致接口调用失败。随着业务的不断扩张，服务之间互相调用会越   <br>
+    来越复杂。   <br>
+    随着服务的越来越多，对调用链的分析会越来越复杂。   <br>
+
+    术语 <br>
+       - Span：基本工作单元，例如，在一个新建的span中发送一个RPC等同于发送一个回应请求给RPC，span通过一个64位ID唯   <br>
+                一标识，trace以另一个64位ID表示，span还有其他数据信息，比如摘要、时间戳事件、关键值注释(tags)、span   <br>
+                的ID、以及进度ID(通常是IP地址)   <br>
+       - span在不断的启动和停止，同时记录了时间信息，当你创建了一个span，你必须在未来的某个时刻停止它。   <br>
+       - Trace：一系列spans组成的一个树状结构，例如，如果你正在跑一个分布式大数据工程，你可能需要创建一个trace。   <br>
+       - Annotation：用来及时记录一个事件的存在，一些核心annotations用来定义一个请求的开始和结束   <br>
+           1 cs - Client Sent -客户端发起一个请求，这个annotion描述了这个span的开始   <br>
+           2 sr - Server Received -服务端获得请求并准备开始处理它，如果将其sr减去cs时间戳便可得到网络延迟   <br>
+           3 ss - Server Sent -注解表明请求处理的完成(当请求返回客户端)，如果ss减去sr时间戳便可得到服务端需要的   <br>
+                处理请求时间   <br>
+           4 cr - Client Received -表明span的结束，客户端成功接收到服务端的回复，如果cr减去cs时间戳便可得到客户端   <br>
+                从服务端获取回复的所有所需时间   <br>
+
+
