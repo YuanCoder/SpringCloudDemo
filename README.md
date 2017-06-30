@@ -308,4 +308,6 @@ SpringCloud 学习
            4 cr - Client Received -表明span的结束，客户端成功接收到服务端的回复，如果cr减去cs时间戳便可得到客户端
                 从服务端获取回复的所有所需时间
 
-
+        基本知识讲解完毕，下面我们来实战，本文的案例主要有三个工程组成:一个server-zipkin,它的主要作用使用ZipkinServer
+        的功能，收集调用数据，并展示；一个service-hi,对外暴露hi接口；一个service-miya,对外暴露miya接口；这两个service
+        可以相互调用；并且只有调用了，server-zipkin才会收集数据的，这就是为什么叫服务追踪了。
