@@ -29,6 +29,8 @@
         <module name="serverzipkin" />
         <module name="servicefeign" />
         <module name="servicehi" />
+        <module name="servicehi2" />
+        <module name="servicemiya" />
         <module name="serviceribbon" />
         <module name="servicezuul" />
       </profile>
@@ -42,6 +44,7 @@
       <module name="servicefeign" target="1.8" />
       <module name="servicehi" target="1.8" />
       <module name="servicehi2" target="1.8" />
+      <module name="servicemiya" target="1.8" />
       <module name="serviceribbon" target="1.8" />
       <module name="servicezuul" target="1.8" />
       <module name="SpringCloudDemo" target="1.5" />

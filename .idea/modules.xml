@@ -10,6 +10,8 @@
       <module fileurl="file://$PROJECT_DIR$/serverzipkin/serverzipkin.iml" filepath="$PROJECT_DIR$/serverzipkin/serverzipkin.iml" />
       <module fileurl="file://$PROJECT_DIR$/servicefeign/servicefeign.iml" filepath="$PROJECT_DIR$/servicefeign/servicefeign.iml" />
       <module fileurl="file://$PROJECT_DIR$/servicehi/servicehi.iml" filepath="$PROJECT_DIR$/servicehi/servicehi.iml" />
+      <module fileurl="file://$PROJECT_DIR$/servicehi2/servicehi2.iml" filepath="$PROJECT_DIR$/servicehi2/servicehi2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/servicemiya/servicemiya.iml" filepath="$PROJECT_DIR$/servicemiya/servicemiya.iml" />
       <module fileurl="file://$PROJECT_DIR$/serviceribbon/serviceribbon.iml" filepath="$PROJECT_DIR$/serviceribbon/serviceribbon.iml" />
       <module fileurl="file://$PROJECT_DIR$/servicezuul/servicezuul.iml" filepath="$PROJECT_DIR$/servicezuul/servicezuul.iml" />
     </modules>

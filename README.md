@@ -311,3 +311,14 @@ SpringCloud 学习
         基本知识讲解完毕，下面我们来实战，本文的案例主要有三个工程组成:一个server-zipkin,它的主要作用使用ZipkinServer
         的功能，收集调用数据，并展示；一个service-hi,对外暴露hi接口；一个service-miya,对外暴露miya接口；这两个service
         可以相互调用；并且只有调用了，server-zipkin才会收集数据的，这就是为什么叫服务追踪了。
+
+        依次启动上面的server-zipkin service-hi  service-miya 三个工程，打开浏览器访问：http://localhost:9411/
+
+        访问：http://localhost:8989/miya，浏览器出现：
+
+        i’m service-hi2
+        再打开http://localhost:9411/的界面，点击Dependencies,可以发现服务的依赖关系。
+
+        点击find traces,可以看到具体服务相互调用的数据。
+
+
