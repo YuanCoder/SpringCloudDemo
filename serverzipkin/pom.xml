@@ -50,6 +50,7 @@
 			<groupId>io.zipkin.java</groupId>
 			<artifactId>zipkin-autoconfigure-ui</artifactId>
 		</dependency>
+
 	</dependencies>
 
 	<dependencyManagement>
