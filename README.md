@@ -322,3 +322,75 @@ SpringCloud 学习
         点击find traces,可以看到具体服务相互调用的数据。
 
 
+# 高可用的服务注册中心
+
+    Eureka通过运行多个实例，使其更具有高可用性。事实上，这是它默认的熟性，你需要做的就是给对等的实例一个合法的关联serviceurl。
+
+    改造工作
+    在eureka-server工程中resources文件夹下，创建配置文件application-peer1.yml:
+            server:
+              port: 8761
+
+            spring:
+              profiles: peer1
+            eureka:
+              instance:
+                hostname: peer1
+              client:
+                serviceUrl:
+                  defaultZone: http://peer2:8769/eureka/
+
+    并且创建另外一个配置文件application-peer2.yml：
+
+            server:
+              port: 8769
+
+            spring:
+              profiles: peer2
+            eureka:
+              instance:
+                hostname: peer2
+              client:
+                serviceUrl:
+                  defaultZone: http://peer1:8761/eureka/
+
+    这时eureka-server就已经改造完毕。
+    按照官方文档的指示，需要改变etc/hosts
+        127.0.0.1 peer1
+        127.0.0.1 peer2
+
+    这时需要改造下service-hi:
+        eureka:
+          client:
+            serviceUrl:
+              defaultZone: http://peer1:8761/eureka/
+        server:
+          port: 8762
+        spring:
+          application:
+            name: service-hi
+
+    启动工程
+        启动eureka-server：
+
+        Java -jar eureka-server-0.0.1-SNAPSHOT.jar - -spring.profiles.active=peer1
+
+        java -jar eureka-server-0.0.1-SNAPSHOT.jar - -spring.profiles.active=peer2
+        >
+
+        启动service-hi:
+
+        java -jar service-hi-0.0.1-SNAPSHOT.jar
+
+        你会发现注册了service-hi，并且有个peer2节点，同理访问localhost:8769你会发现有个peer1节点。
+
+        client只向8761注册，但是你打开8769，你也会发现，8769也有 client的注册信息。
+
+        个人感受：这是通过看官方文档的写的demo ，但是需要手动改host是不是不符合Spring Cloud 的高上大？
+
+        eureka.instance.preferIpAddress=true是通过设置ip让eureka让其他服务注册它。也许能通过去改变去通过改变host的方式。
+
+
+        Eureka-eserver peer1 8761,Eureka-eserver peer2 8769相互感应，当有服务注册时，两个Eureka-eserver是对等的，
+        它们都存有相同的信息，这就是通过服务器的冗余来增加可靠性，当有一台服务器宕机了，服务并不会终止，因为另一台服务
+        存有相同的数据。
