@@ -1,6 +1,10 @@
 server:
   port: 8761
 
+eureka:
+  instance:
+    prefer-ip-address: true #让其他服务注册它也许能通过去改变去通过改变host的方式
+
 spring:
   profiles: peer1
 eureka:

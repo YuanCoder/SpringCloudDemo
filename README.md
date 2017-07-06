@@ -394,3 +394,60 @@ SpringCloud 学习
         Eureka-eserver peer1 8761,Eureka-eserver peer2 8769相互感应，当有服务注册时，两个Eureka-eserver是对等的，
         它们都存有相同的信息，这就是通过服务器的冗余来增加可靠性，当有一台服务器宕机了，服务并不会终止，因为另一台服务
         存有相同的数据。
+
+
+# docker部署spring cloud项目
+
+    docker简介
+    Docker是一个开源的引擎，可以轻松的为任何应用创建一个轻量级的、可移植的、自给自足的容器。开发者在笔记本上编译测试通过的容
+    器可以批量地在生产环境中部署，包括VMs（虚拟机）、bare metal、OpenStack 集群和其他的基础应用平台。
+
+    docker通常用于如下场景：
+
+    web应用的自动化打包和发布；
+    自动化测试和持续集成、发布；
+    在服务型环境中部署和调整数据库或其他的后台应用；
+    从头编译或者扩展现有的OpenShift或Cloud Foundry平台来搭建自己的PaaS环境。
+    Docker 的优点
+
+    1、简化程序：
+    Docker 让开发者可以打包他们的应用以及依赖包到一个可移植的容器中，然后发布到任何流行的 Linux 机器上，便可以实现虚拟化。
+    Docker改变了虚拟化的方式，使开发者可以直接将自己的成果放入Docker中进行管理。方便快捷已经是 Docker的最大优势，过去需要用数
+    天乃至数周的 任务，在Docker容器的处理下，只需要数秒就能完成。
+
+    2、避免选择恐惧症：
+    如果你有选择恐惧症，还是资深患者。Docker 帮你 打包你的纠结！比如 Docker 镜像；Docker 镜像中包含了运行环境和配置，所以 Docker
+     可以简化部署多种应用实例工作。比如 Web 应用、后台应用、数据库应用、大数据应用比如 Hadoop 集群、消息队列等等都可以打包成一
+     个镜像部署。
+
+    3、节省开支：
+    一方面，云计算时代到来，使开发者不必为了追求效果而配置高额的硬件，Docker 改变了高性能必然高价格的思维定势。Docker 与云的结合，
+    让云空间得到更充分的利用。不仅解决了硬件管理的问题，也改变了虚拟化的方式。
+
+    采用maven的方式去构建项目，并采用docker-maven-plugin去构建docker镜像。
+    （待更。。。）
+
+
+# 断路器监控(Hystrix Dashboard)
+
+    Hystrix Dashboard简介
+
+    在微服务架构中为例保证程序的可用性，防止程序出错导致网络阻塞，出现了断路器模型。断路器的状况反应了一个程序的可用性和健壮性，
+    它是一个重要指标。Hystrix Dashboard是作为断路器状态的一个组件，提供了数据监控和友好的图形化界面。
+
+    开始改造service-hi
+
+        引入依赖pom
+
+        在程序的入口ServiceHiApplication类，加上@EnableHystrix注解开启断路器，这个是必须的，并且需要在程序中声明断路点HystrixCommand；
+    加上@EnableHystrixDashboard注解，开启HystrixDashboard
+
+    依次开启eureka-server 和service-hi.
+
+    打开locahost:8762/hystrix 可以看见小熊界面
+    在界面依次输入：locahost:8762/hystrix.stream 、2000 、miya
+
+    Hystrix Dashboard图形展示
+    需要请求一次后台， http://localhost:8762/hi?name=yuan, 然后打开http://localhost:8762/hystrix.stream，可以看到一些具体的数据。
+
+    踩坑 ： 注意locahost 与127.0.0.1 的区别（有时用localhost 界面不显示）
